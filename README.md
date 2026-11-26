@@ -8,12 +8,11 @@ Antibiotics have played a cruicial role in improving health care and human longe
 
 This workflow, CESAR, allows for intial general analysis of short-read sequencing data *E. coli* species.
 ![Alt text](./docs/metro_map.png)
-1) Read QC
-   Use `FASTQC` to provide a read quality check report. Use `Trimmomatic` to filter low-quality bases and remove adapter sequences.
-3) Align Trimmomatic output reads against the *K-12 E. coli* strain
-4) Create visualization for K-12 comparisons and identify Resistant loci
-5) Use Trimmomatic output reads to create de novo assemblies to compare genomic similarities
-6) Identify AMR and plasmids
+1) Use `FASTQC` to provide a read quality check report. Use `Trimmomatic` to filter low-quality bases and remove adapter sequences.
+2) `Bowtie2` to align reads to the *K-12 E. coli* reference.
+3) `pycirclize` to create visualizations for *K-12* comparisons and identify Resistant loci with `AMRFinderPlus`.
+4) `SPAdes` uses trimmomatic output reads to create de novo assemblies to then compare genomic similarities with `FastANI`
+5) Lastly `MOB-suite` identifies AMR and determines if they are on a plasmid
 
 ## Main Dependencies
 - SRA Toolkit=3.2.1
