@@ -34,9 +34,9 @@ Required software is obtained with [Docker](https://docs.docker.com/learn/). Ple
 
 Once all dependencies are installed, you can test the workflow by following the following instructions which provides data from [Mannan et al. 2024](https://pubmed.ncbi.nlm.nih.gov/38274770/).
 
-To download the k12 reference file run the following script
+Clone repository
 ```
- bash bin/download_k12_reference.sh
+git
 ```
 The reads for the four resistant *E. coli* isolates are downloaded by the pipeline itself (`DOWNLOAD_READS`) and saved to `data/reads/` as `<sample>_{1,2}.fastq.gz`:
 
