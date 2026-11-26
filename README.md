@@ -14,6 +14,21 @@ This workflow, CESAR, allows for intial general analysis of short-read sequencin
 4) Use Trimmomatic output reads to create de novo assemblies to compare genomic similarities
 5) Identify AMR and plasmids
 
+## Main Dependencies
+- SRA Toolkit=3.2.1
+- FastQC= 0.12.1
+- Trimmomatic=0.39
+- Bowtie2=2.5.2
+- SAMtools=1.18
+- mosdepth=0.3.14
+- BCFtools=1.25
+- SPAdes=4.3.0
+- QUAST=5.3.0
+- FastANI=1.34
+- AMRFinderPlus=4.2.7 
+- MOB-suite=3.1.9
+- pyCirclize= 1.10.1
+
 ## Compute requirements
 Based on Claude Opus 5.5 estimates
 Recommended requirements:
