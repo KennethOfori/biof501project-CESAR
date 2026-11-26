@@ -8,11 +8,12 @@ Antibiotics have played a cruicial role in improving health care and human longe
 
 This workflow, CESAR, allows for intial general analysis of short-read sequencing data *E. coli* species.
 ![Alt text](./docs/metro_map.png)
-1) Provide a fast quality check report using FASTQC. Use Trimmomatic to filter low-quality bases and remove adapter sequences
-2) Align Trimmomatic output reads against the *K-12 E. coli* strain
-3) Create visualization for K-12 comparisons and identify Resistant loci
-4) Use Trimmomatic output reads to create de novo assemblies to compare genomic similarities
-5) Identify AMR and plasmids
+1) Read QC
+   Use `FASTQC` to provide a read quality check report. Use `Trimmomatic` to filter low-quality bases and remove adapter sequences.
+3) Align Trimmomatic output reads against the *K-12 E. coli* strain
+4) Create visualization for K-12 comparisons and identify Resistant loci
+5) Use Trimmomatic output reads to create de novo assemblies to compare genomic similarities
+6) Identify AMR and plasmids
 
 ## Main Dependencies
 - SRA Toolkit=3.2.1
