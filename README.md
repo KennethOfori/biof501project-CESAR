@@ -74,6 +74,7 @@ nextflow run main.nf -profile local -w work -resume
 After running the pipeline you can verify that everything worked by comparing the generated output with the contents of `expected_results/`
 
 **Circos plot sample DMIH:**
+
 ![Alt text](./docs/expected_results/circos_plots/DMIH.circos.png)
 
 ### AI Disclosure
