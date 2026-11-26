@@ -1,5 +1,5 @@
 TrimmomaticPE: Started with arguments:
- -threads 2 SRR33692910_1.fastq.gz SRR33692910_2.fastq.gz SRR33692910_1.trimmed.fq.gz SRR33692910_1.unpaired.fq.gz SRR33692910_2.trimmed.fq.gz SRR33692910_2.unpaired.fq.gz ILLUMINACLIP:/usr/local/share/trimmomatic-0.39-2/adapters/TruSeq3-PE.fa:2:30:10:2:true LEADING:3 TRAILING:3 MINLEN:36
+ -threads 2 DMIH_1.fastq.gz DMIH_2.fastq.gz DMIH_1.trimmed.fq.gz DMIH_1.unpaired.fq.gz DMIH_2.trimmed.fq.gz DMIH_2.unpaired.fq.gz ILLUMINACLIP:/usr/local/share/trimmomatic-0.39-2/adapters/TruSeq3-PE.fa:2:30:10:2:true LEADING:3 TRAILING:3 MINLEN:36
 Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
 ILLUMINACLIP: Using 1 prefix pairs, 0 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
 Quality encoding detected as phred33
