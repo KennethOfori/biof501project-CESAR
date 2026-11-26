@@ -517,7 +517,7 @@ process RESISTANCE_REGION_PLOT {
 }
 
 workflow {
-    // emit a tupple pair [sample_id, [ read_1, read_2] ]
+    // emit a tuple pair [sample_id, [ read_1, read_2] ]
     accessions_ch = channel.fromList(params.samples.collect { name, acc -> tuple(name, acc) })
     reads_ch = DOWNLOAD_READS(accessions_ch).map { sample_id, r1, r2 -> tuple(sample_id, [r1, r2]) }
 
