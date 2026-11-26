@@ -94,3 +94,11 @@ After running the pipeline you can verify that everything worked by comparing th
 
 ### AI Disclosure
 This workflow uses LLM tools in its development. Code development and creation of directed acyclic graph: Claude Opus 5.5.
+
+##References
+1. Baquero, F. Threats of antibiotic resistance: an obliged reappraisal. _Int Microbiol_ **24**, 499–506 (2021).
+2. Walker, M. M., Roberts, J. A., Rogers, B. A., Harris, P. N. A. & Sime, F. B. Current and Emerging Treatment Options for Multidrug Resistant Escherichia coli Urosepsis: A Review. _Antibiotics_ **11**, 1821 (2022).
+3. Mannan, S. J. _et al._ Occurrence and characterization of β-lactamase-producing bacteria in biomedical wastewater and in silico enhancement of antibiotic efficacy. _Front Microbiol_ **14**, 1292597 (2023).
+4. Męcik, M., Stefaniak, K., Harnisz, M. & Korzeniewska, E. Hospital and municipal wastewater as a source of carbapenem-resistant Acinetobacter baumannii and Pseudomonas aeruginosa in the environment: a review. _Environ Sci Pollut Res Int_ **31**, 48813–48838 (2024).
+5. Partridge, S. R., Kwong, S. M., Firth, N. & Jensen, S. O. Mobile Genetic Elements Associated with Antimicrobial Resistance. _Clin Microbiol Rev_ **31**, e00088-17 (2018).
+6. Mannan, S. J. _et al._ Exploring genetic variations and plasmid diversity in Escherichia coli strains isolated from Hospital Wastewater. _BMC Genomics_ **27**, 466 (2026).
