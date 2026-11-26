@@ -35,6 +35,7 @@ Required software is obtained with [Docker](https://docs.docker.com/learn/). Ple
 
 ## Compute requirements
 Based on Claude Opus 5.5 estimates
+
 Recommended requirements:
 - CPUs = 8
 - Memory = 16
