@@ -93,7 +93,7 @@ After running the pipeline you can verify that everything worked by comparing th
 <img src="./expected_results/resistance_regions.png" alt="Resistance regions plot" width="400">
 
 ### AI Disclosure
-This workflow uses LLM tools in its development. Code development and creation of directed acyclic graph: Claude Opus 5.5.
+This workflow uses LLM tools in its development. Code development and documentation: Claude Opus 5.5.
 
 ## References
 1. Baquero, F. (2021). Threats of antibiotic resistance: an obliged reappraisal. *Int Microbiol*, 24(4), 499–506. https://doi.org/10.1007/s10123-021-00184-y
