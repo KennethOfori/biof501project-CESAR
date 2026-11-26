@@ -55,8 +55,10 @@ for sector in circos.sectors:
     cov_track.yticks([0, cap / 2, cap], labels=["0", f"{cap/2:.0f}x", f"{cap:.0f}x"],
                      vmin=0, vmax=cap, side="left", label_size=6)
     cov_track.fill_between(mid, np.minimum(depth, cap), vmin=0, vmax=cap, color="steelblue")
-    # shade each low-coverage window across the full height of the ring
-    low = c[c["depth"] < 0.1 * np.median(depth)]
+    # shade each low-coverage window across the full height of the ring. Below 10% of the
+    # sample's median depth is treated as "effectively absent": loose enough to tolerate
+    # normal coverage dips, strict enough that only likely deletions are flagged.
+    low =c[c["depth"] < 0.1 * np.median(depth)]
     for start, end in zip(low["start"], low["end"]):
         cov_track.rect(start, end, color="red", alpha=0.6, lw=0)
 

@@ -107,6 +107,17 @@ process TRIMMOMATIC {
     # adapter FASTAs ship inside the bioconda package, next to the trimmomatic wrapper
     ADAPTERS=\$(dirname \$(readlink -f \$(which trimmomatic)))/adapters
 
+    # ILLUMINACLIP:<adapters>:2:30:10:2:true (Trimmomatic manual's recommended values)
+    #   2    mismatches allowed in the 16 bp adapter seed
+    #   30   score threshold for palindrome (read-through) adapter detection
+    #   10   score threshold for simple adapter matches
+    #   2    minimum adapter length detected in palindrome mode
+    #   true keep both reads after palindrome clipping, so pairs survive for Bowtie2/SPAdes
+    # LEADING:3 TRAILING:3  drop bases below Q3 at either end (only the very worst calls)
+    # MINLEN:36             drop reads shorter than 36 bp; they map ambiguously
+    # No SLIDINGWINDOW step: trimming is deliberately lenient, and low-quality bases are
+    # excluded later instead (base quality >= params.min_bq at variant calling).
+
     trimmomatic PE -threads ${task.cpus} \\
         ${reads[0]} ${reads[1]} \\
         ${sample_id}_1.trimmed.fq.gz ${sample_id}_1.unpaired.fq.gz \\
@@ -171,6 +182,10 @@ process SAMPLE_COVERAGE {
 
     script:
     """
+    # --by 5000: 5 kb windows give ~930 bins across the 4.6 Mb K-12 genome, fine enough
+    # to show deletions and small enough to plot in the circos ring.
+    # --fast-mode skips per-base CIGAR/mate-overlap corrections; harmless for 5 kb means
+    # (LOCUS_COVERAGE, which reports per-gene depth, does not use it).
     mosdepth -t ${task.cpus} -n --fast-mode --by 5000 ${sample_id} ${bam}
     """
 }
@@ -327,6 +342,10 @@ process SPADES {
 
     script:
     """
+    # No -k given: SPAdes chooses k-mer sizes from read length. For this dataset that is
+    # 21,33,55,77,99,127 for the 250 bp runs and 21,33,55 for DMIH (150 bp reads); the
+    # values used are recorded in each <sample>.spades.log.
+    # -m is the memory cap in GB, taken from the process label (see nextflow.config).
     spades.py --isolate \\
         -1 ${reads[0]} -2 ${reads[1]} \\
         -t ${task.cpus} -m ${task.memory.toGiga()} \\
@@ -375,6 +394,8 @@ process FAST_ANI {
     """
     ls ${contigs} > genomes.txt
     echo ${reference} >> genomes.txt
+    # FastANI defaults: k-mer 16, 3000 bp fragments, ANI reported only when >= 20% of
+    # the genome is shared. ANI >= ~95% is the usual same-species threshold.
     fastANI --ql genomes.txt --rl genomes.txt -o ani.tsv -t ${task.cpus}
     """
 }
