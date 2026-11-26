@@ -1,0 +1,75 @@
+%%metro title: E. coli comparative genomics & AMR pipeline
+%%metro style: dark
+%%metro line: qc | Read QC | #f2b134
+%%metro line: variants | Variant calling vs K-12 | #2db572
+%%metro line: loci | Resistance-locus analysis | #e0544e
+%%metro line: assembly | De novo assembly & ANI | #4a90d9
+%%metro line: amr | AMR genes & plasmids | #b36bd9
+
+graph LR
+    subgraph preprocessing [Pre-processing]
+        reads([Paired-end reads])
+        fastqc([FastQC])
+        trimmomatic([Trimmomatic])
+
+        reads -->|qc| fastqc
+        reads -->|variants,loci,assembly,amr| trimmomatic
+    end
+
+    subgraph alignment [Reference alignment & variants]
+        bowtie2_build([Bowtie2 build])
+        alignment_to_ref([Bowtie2 align])
+        sample_coverage([mosdepth coverage])
+        call_variants([bcftools call])
+        circos_plot([Circos plot])
+        build_locus_bed([Locus BED])
+        locus_coverage([Locus coverage])
+
+        bowtie2_build -->|variants,loci| alignment_to_ref
+        alignment_to_ref -->|variants| sample_coverage
+        alignment_to_ref -->|variants,loci| call_variants
+        sample_coverage -->|variants| circos_plot
+        call_variants -->|variants| circos_plot
+        alignment_to_ref -->|loci| locus_coverage
+        build_locus_bed -->|loci| locus_coverage
+    end
+
+    subgraph loci_section [Resistance loci]
+        locus_table([Locus table])
+        locus_heatmap([Locus heatmap])
+
+        locus_table -->|loci| locus_heatmap
+    end
+
+    subgraph assembly_section [De novo assembly]
+        spades([SPAdes])
+        quast([QUAST])
+        fast_ani([FastANI])
+        ani_heatmap([ANI heatmap])
+
+        spades -->|assembly| quast
+        spades -->|assembly| fast_ani
+        fast_ani -->|assembly| ani_heatmap
+    end
+
+    subgraph amr_section [AMR & plasmids]
+        mob_init([MOB-init DB])
+        amrfinder([AMRFinderPlus])
+        mob_recon([MOB-recon])
+        amr_location([AMR location])
+        amr_location_plot([AMR location heatmap])
+        resistance_region_plot([Resistance regions])
+
+        mob_init -->|amr| mob_recon
+        amrfinder -->|amr| amr_location
+        mob_recon -->|amr| amr_location
+        amr_location -->|amr| amr_location_plot
+        amr_location -->|amr| resistance_region_plot
+    end
+
+    trimmomatic -->|variants,loci| alignment_to_ref
+    trimmomatic -->|assembly,amr| spades
+    locus_coverage -->|loci| locus_table
+    call_variants -->|loci| locus_table
+    spades -->|amr| amrfinder
+    spades -->|amr| mob_recon

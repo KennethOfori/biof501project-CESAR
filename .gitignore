@@ -1,0 +1,8 @@
+.nextflow/
+.nextflow.log*
+.nextflow.cache
+.nextflow.history
+work/
+results/
+data/sra
+data/reads
