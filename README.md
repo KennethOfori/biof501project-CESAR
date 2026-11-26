@@ -1,4 +1,4 @@
-# Comparing E.Coli Species and Identifying Antimicrobial Resistance Genes
+# Comparing E.Coli Species and Identifying Antimicrobial Resistance Genes (CESAR)
 **Kenneth Ofori-Amanfo**
 
 ## Introduction
