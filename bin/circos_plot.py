@@ -3,7 +3,6 @@
 import sys
 import numpy as np
 import pandas as pd
-from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from pycirclize import Circos
 
@@ -21,9 +20,21 @@ circos = Circos(sizes, start=GAP / 2, end=360 - GAP / 2, space=0 if len(sizes) =
 circos.text(sample, size=14)
 
 # ring labels, written in the gap (r = middle of each ring's radius range)
-SNP_BIN = 10_000  # bin size for the SNP-density histogram
-for label, r in [("Genome", 96.5), ("Read depth", 77.5), ("SNPs / 10 kb", 55.5), ("Indels", 43.5)]:
+BIN = 10_000  # bin size for the SNP and indel density histograms
+for label, r in [("Genome", 96.5), ("Read depth", 77.5), ("SNPs / 10 kb", 55.5), ("Indels / 10 kb", 38.5)]:
     circos.text(label, r=r, deg=0, size=7, orientation="horizontal")
+
+
+def density_track(sector, positions, r_lim, color):
+    """Histogram ring: variants per BIN, with its own 0..max scale."""
+    edges = np.append(np.arange(0, sector.size, BIN), sector.size)  # last bin may be short
+    counts, _ = np.histogram(positions, bins=edges)
+    vmax = max(int(counts.max()), 1)
+    track = sector.add_track(r_lim, r_pad_ratio=0.05)
+    track.axis()
+    track.yticks([0, vmax], labels=["0", str(vmax)], vmin=0, vmax=vmax, side="left", label_size=6)
+    track.bar((edges[:-1] + edges[1:]) / 2, counts, width=np.diff(edges), vmin=0, vmax=vmax,
+              color=color, lw=0)
 
 for sector in circos.sectors:
     c = cov[cov["chrom"] == sector.name]
@@ -51,28 +62,17 @@ for sector in circos.sectors:
 
     snps, indels = v[v["is_snp"]], v[~v["is_snp"]]
 
-    # ring 3: SNP density (SNPs per 10 kb bin) -- shows hotspots that a dot ring hides
-    edges = np.append(np.arange(0, sector.size, SNP_BIN), sector.size)  # last bin may be short
-    counts, _ = np.histogram(snps["pos"], bins=edges)
-    snp_max = max(int(counts.max()), 1)
-    snp_track = sector.add_track((48, 63), r_pad_ratio=0.05)
-    snp_track.axis()
-    snp_track.yticks([0, snp_max], labels=["0", str(snp_max)], vmin=0, vmax=snp_max,
-                     side="left", label_size=6)
-    snp_track.bar((edges[:-1] + edges[1:]) / 2, counts, width=np.diff(edges), vmin=0, vmax=snp_max,
-                  color="darkorange", lw=0)
-
-    # ring 4: indel positions (sparse enough to show individually)
-    indel_track = sector.add_track((41, 46))
-    indel_track.axis()
-    indel_track.scatter(indels["pos"], np.full(len(indels), 0.5), vmin=0, vmax=1, s=4, color="purple")
+    # rings 3 and 4: SNP and indel density (per 10 kb bin) -- shows hotspots that a dot ring
+    # hides. Each ring has its own scale: indels are far rarer than SNPs.
+    density_track(sector, snps["pos"], (48, 63), "darkorange")
+    density_track(sector, indels["pos"], (31, 46), "purple")
 
 fig = circos.plotfig()
 legend = [
     Patch(color="steelblue", label="Read depth (5 kb windows)"),
     Patch(color="red", alpha=0.6, label="Low coverage (<10% of median)"),
     Patch(color="darkorange", label="SNP density (SNPs per 10 kb)"),
-    Line2D([], [], marker="o", ls="", color="purple", label="Indel"),
+    Patch(color="purple", label="Indel density (indels per 10 kb)"),
 ]
 circos.ax.legend(handles=legend, loc="upper left", bbox_to_anchor=(1.0, 1.0), fontsize=8, frameon=False)
 fig.savefig(f"{sample}.circos.png", dpi=300, bbox_inches="tight")

@@ -25,7 +25,7 @@ params.min_af   = 0.9   // fraction of reads supporting the alt allele
 // Extract the K-12 reference genome and annotation from the NCBI Datasets zip
 process UNZIP_K12 {
     label 'process_low'
-    container 'busybox:1.36'
+    container 'staphb/pycirclize:1.10.1'   // has bash + python; no unzip needed
 
     input:
     path zip
@@ -36,7 +36,7 @@ process UNZIP_K12 {
 
     script:
     """
-    unzip -o ${zip} -d k12
+    python3 -m zipfile -e ${zip} k12
     """
 }
 
