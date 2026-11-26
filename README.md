@@ -11,13 +11,13 @@ This workflow, CESAR, allows for an initial general analysis of short-read seque
 ![CESAR workflow metro map](./docs/metro_map.png)
 
 1) The [`SRA Toolkit`](https://github.com/ncbi/sra-tools) [[7](https://github.com/ncbi/sra-tools)] downloads the reads. [`FastQC`](https://github.com/s-andrews/fastqc) [[8](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)] provides a read quality report, and [`Trimmomatic`](https://github.com/usadellab/trimmomatic) [[9](https://doi.org/10.1093/bioinformatics/btu170)] filters low-quality bases and removes adapter sequences.
-2) [`Bowtie2`](https://github.com/benlangmead/bowtie2) [[10](https://doi.org/10.1038/nmeth.1923)] aligns the trimmed reads to the *E. coli* K-12 reference, and [`SAMtools`](https://github.com/samtools/samtools) [[11](https://doi.org/10.1093/gigascience/giab008)] sorts and indexes the alignments.
-3) [`mosdepth`](https://github.com/brentp/mosdepth) [[12](https://doi.org/10.1093/bioinformatics/btx699)] and [`BCFtools`](https://samtools.github.io/bcftools/bcftools.html) [[11](https://doi.org/10.1093/gigascience/giab008)] measure coverage and call variants against K-12. These are visualized with [`pyCirclize`](https://moshi4.github.io/pyCirclize/) [[13](https://github.com/moshi4/pyCirclize)] circos plots and a heatmap of known resistance loci (porins, efflux pumps, drug targets).
-4) [`SPAdes`](https://github.com/ablab/spades) [[14](https://doi.org/10.1002/cpbi.102)] builds de novo assemblies from the trimmed reads. [`QUAST`](https://github.com/ablab/quast) [[15](https://doi.org/10.1093/bioinformatics/btt086)] assesses assembly quality and [`FastANI`](https://github.com/ParBliSS/FastANI) [[16](https://doi.org/10.1038/s41467-018-07641-9)] compares genomic similarity between isolates.
-5) [`AMRFinderPlus`](https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/) [[17](https://doi.org/10.1038/s41598-021-91456-0)] identifies AMR genes in the assemblies, and [`MOB-suite`](https://github.com/phac-nml/mob-suite) [[18](https://doi.org/10.1099/mgen.0.000206), [19](https://doi.org/10.1099/mgen.0.000435)] determines whether each one is located on a plasmid or the chromosome.
+2) [`Bowtie2`](https://github.com/benlangmead/bowtie2) [[10](https://doi.org/10.1038/nmeth.1923)] aligns the trimmed reads to the *E. coli* K-12 reference genome (RefSeq [GCF_000005845.2](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000005845.2/), ASM584v2) [[11](https://doi.org/10.1126/science.277.5331.1453)], and [`SAMtools`](https://github.com/samtools/samtools) [[12](https://doi.org/10.1093/gigascience/giab008)] sorts and indexes the alignments.
+3) [`mosdepth`](https://github.com/brentp/mosdepth) [[13](https://doi.org/10.1093/bioinformatics/btx699)] and [`BCFtools`](https://samtools.github.io/bcftools/bcftools.html) [[12](https://doi.org/10.1093/gigascience/giab008)] measure coverage and call variants against K-12. These are visualized with [`pyCirclize`](https://moshi4.github.io/pyCirclize/) [[14](https://github.com/moshi4/pyCirclize)] circos plots and a heatmap of known resistance loci (porins, efflux pumps, drug targets).
+4) [`SPAdes`](https://github.com/ablab/spades) [[15](https://doi.org/10.1002/cpbi.102)] builds de novo assemblies from the trimmed reads. [`QUAST`](https://github.com/ablab/quast) [[16](https://doi.org/10.1093/bioinformatics/btt086)] assesses assembly quality and [`FastANI`](https://github.com/ParBliSS/FastANI) [[17](https://doi.org/10.1038/s41467-018-07641-9)] compares genomic similarity between isolates.
+5) [`AMRFinderPlus`](https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/) [[18](https://doi.org/10.1038/s41598-021-91456-0)] identifies AMR genes in the assemblies, and [`MOB-suite`](https://github.com/phac-nml/mob-suite) [[19](https://doi.org/10.1099/mgen.0.000206), [20](https://doi.org/10.1099/mgen.0.000435)] determines whether each one is located on a plasmid or the chromosome.
 
 ## Main Dependencies
-The workflow uses Nextflow [[20](https://doi.org/10.1038/nbt.3820)] as its management system. Please install [Nextflow](https://www.nextflow.io/) to run the workflow.
+The workflow uses Nextflow [[21](https://doi.org/10.1038/nbt.3820)] as its management system. Please install [Nextflow](https://www.nextflow.io/) to run the workflow.
 
 Required software is obtained with [Docker](https://docs.docker.com/learn/). Please also have it installed.
 
@@ -67,6 +67,8 @@ The reads for the four resistant *E. coli* isolates are downloaded by the pipeli
 | HCDL   | SRR33692909 |
 | NTIH   | SRR33692908 |
 
+These runs are available from the NCBI Sequence Read Archive under BioProject [PRJNA1267524](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1267524).
+
 If those files are already present, the download is skipped.
 
 **Run the Pipeline**
@@ -106,13 +108,14 @@ This workflow uses LLM tools in its development. Code development and documentat
 8. Andrews, S. (2010). FastQC: a quality control tool for high throughput sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 9. Bolger, A. M., Lohse, M. & Usadel, B. (2014). Trimmomatic: a flexible trimmer for Illumina sequence data. *Bioinformatics*, 30(15), 2114–2120. https://doi.org/10.1093/bioinformatics/btu170
 10. Langmead, B. & Salzberg, S. L. (2012). Fast gapped-read alignment with Bowtie 2. *Nat Methods*, 9(4), 357–359. https://doi.org/10.1038/nmeth.1923
-11. Danecek, P. et al. (2021). Twelve years of SAMtools and BCFtools. *GigaScience*, 10(2), giab008. https://doi.org/10.1093/gigascience/giab008
-12. Pedersen, B. S. & Quinlan, A. R. (2018). Mosdepth: quick coverage calculation for genomes and exomes. *Bioinformatics*, 34(5), 867–868. https://doi.org/10.1093/bioinformatics/btx699
-13. Shimoyama, Y. pyCirclize: circular visualization in Python. https://github.com/moshi4/pyCirclize
-14. Prjibelski, A., Antipov, D., Meleshko, D., Lapidus, A. & Korobeynikov, A. (2020). Using SPAdes de novo assembler. *Curr Protoc Bioinformatics*, 70(1), e102. https://doi.org/10.1002/cpbi.102
-15. Gurevich, A., Saveliev, V., Vyahhi, N. & Tesler, G. (2013). QUAST: quality assessment tool for genome assemblies. *Bioinformatics*, 29(8), 1072–1075. https://doi.org/10.1093/bioinformatics/btt086
-16. Jain, C., Rodriguez-R, L. M., Phillippy, A. M., Konstantinidis, K. T. & Aluru, S. (2018). High throughput ANI analysis of 90K prokaryotic genomes reveals clear species boundaries. *Nat Commun*, 9, 5114. https://doi.org/10.1038/s41467-018-07641-9
-17. Feldgarden, M. et al. (2021). AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence. *Sci Rep*, 11, 12728. https://doi.org/10.1038/s41598-021-91456-0
-18. Robertson, J. & Nash, J. H. E. (2018). MOB-suite: software tools for clustering, reconstruction and typing of plasmids from draft assemblies. *Microb Genom*, 4(8), e000206. https://doi.org/10.1099/mgen.0.000206
-19. Robertson, J., Bessonov, K., Schonfeld, J. & Nash, J. H. E. (2020). Universal whole-sequence-based plasmid typing and its utility to prediction of host range and epidemiological surveillance. *Microb Genom*, 6(10), mgen000435. https://doi.org/10.1099/mgen.0.000435
-20. Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E. & Notredame, C. (2017). Nextflow enables reproducible computational workflows. *Nat Biotechnol*, 35(4), 316–319. https://doi.org/10.1038/nbt.3820
+11. Blattner, F. R. et al. (1997). The complete genome sequence of *Escherichia coli* K-12. *Science*, 277(5331), 1453–1462. https://doi.org/10.1126/science.277.5331.1453
+12. Danecek, P. et al. (2021). Twelve years of SAMtools and BCFtools. *GigaScience*, 10(2), giab008. https://doi.org/10.1093/gigascience/giab008
+13. Pedersen, B. S. & Quinlan, A. R. (2018). Mosdepth: quick coverage calculation for genomes and exomes. *Bioinformatics*, 34(5), 867–868. https://doi.org/10.1093/bioinformatics/btx699
+14. Shimoyama, Y. pyCirclize: circular visualization in Python. https://github.com/moshi4/pyCirclize
+15. Prjibelski, A., Antipov, D., Meleshko, D., Lapidus, A. & Korobeynikov, A. (2020). Using SPAdes de novo assembler. *Curr Protoc Bioinformatics*, 70(1), e102. https://doi.org/10.1002/cpbi.102
+16. Gurevich, A., Saveliev, V., Vyahhi, N. & Tesler, G. (2013). QUAST: quality assessment tool for genome assemblies. *Bioinformatics*, 29(8), 1072–1075. https://doi.org/10.1093/bioinformatics/btt086
+17. Jain, C., Rodriguez-R, L. M., Phillippy, A. M., Konstantinidis, K. T. & Aluru, S. (2018). High throughput ANI analysis of 90K prokaryotic genomes reveals clear species boundaries. *Nat Commun*, 9, 5114. https://doi.org/10.1038/s41467-018-07641-9
+18. Feldgarden, M. et al. (2021). AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence. *Sci Rep*, 11, 12728. https://doi.org/10.1038/s41598-021-91456-0
+19. Robertson, J. & Nash, J. H. E. (2018). MOB-suite: software tools for clustering, reconstruction and typing of plasmids from draft assemblies. *Microb Genom*, 4(8), e000206. https://doi.org/10.1099/mgen.0.000206
+20. Robertson, J., Bessonov, K., Schonfeld, J. & Nash, J. H. E. (2020). Universal whole-sequence-based plasmid typing and its utility to prediction of host range and epidemiological surveillance. *Microb Genom*, 6(10), mgen000435. https://doi.org/10.1099/mgen.0.000435
+21. Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E. & Notredame, C. (2017). Nextflow enables reproducible computational workflows. *Nat Biotechnol*, 35(4), 316–319. https://doi.org/10.1038/nbt.3820
