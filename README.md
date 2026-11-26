@@ -15,6 +15,10 @@ This workflow, CESAR, allows for intial general analysis of short-read sequencin
 5) Lastly `MOB-suite` identifies AMR and determines if they are on a plasmid
 
 ## Main Dependencies
+The workflow uses Nextflow as its management system. Please install [Nextflow](https://www.nextflow.io/) to run the workflow.
+
+Required software is obtained with [Docker](https://docs.docker.com/learn/). Please also have it installed.
+
 - SRA Toolkit=3.2.1
 - FastQC= 0.12.1
 - Trimmomatic=0.39
@@ -38,11 +42,6 @@ Recommended requirements:
 Minimum requirements:
 - CPUs = 2
 - Memory = 6 GB
-
-## Dependencies
-The workflow uses Nextflow as its management system. Please install [Nextflow](https://www.nextflow.io/) to run the workflow.
-
-Required software is obtained with [Docker](https://docs.docker.com/learn/). Please also have it installed.
 
 ## Usage
 
