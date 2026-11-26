@@ -75,7 +75,7 @@ After running the pipeline you can verify that everything worked by comparing th
 
 **Circos plot sample DMIH:**
 
-![Alt text](./docs/expected_results/circos_plots/DMIH.circos.png)
+![Alt text](./expected_results/circos_plots/DMIH.circos.png)
 
 ### AI Disclosure
 This workflow uses LLM tools in its development. Code development and creation of directed acyclic graph: Claude Opus 5.5.
