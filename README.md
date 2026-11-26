@@ -12,9 +12,9 @@ This workflow, CESAR, allows for an initial general analysis of short-read seque
 
 1) [`FastQC`](https://github.com/s-andrews/fastqc) provides a read quality report, and [`Trimmomatic`](https://github.com/usadellab/trimmomatic) filters low-quality bases and removes adapter sequences.
 2) [`Bowtie2`](https://github.com/benlangmead/bowtie2) aligns the trimmed reads to the *E. coli* K-12 reference.
-3) [`mosdepth`](https://github.com/brentp/mosdepth) and [`BCFtools`](https://samtools.github.io/bcftools/bcftools.html) measure coverage and call variants against K-12. These are visualized with `pyCirclize` circos plots and a heatmap of known resistance loci (porins, efflux pumps, drug targets).
+3) [`mosdepth`](https://github.com/brentp/mosdepth) and [`BCFtools`](https://samtools.github.io/bcftools/bcftools.html) measure coverage and call variants against K-12. These are visualized with [`pyCirclize`](https://moshi4.github.io/pyCirclize/) circos plots and a heatmap of known resistance loci (porins, efflux pumps, drug targets).
 4) [`SPAdes`](https://github.com/ablab/spades) builds de novo assemblies from the trimmed reads. [`QUAST`](https://github.com/ablab/quast) assesses assembly quality and [`FastANI`](https://github.com/ParBliSS/FastANI) compares genomic similarity between isolates.
-5) [`AMRFinderPlus`](https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/) identifies AMR genes in the assemblies, and `MOB-suite` determines whether each one is located on a plasmid or the chromosome.
+5) [`AMRFinderPlus`](https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/) identifies AMR genes in the assemblies, and [`MOB-suite`](https://github.com/phac-nml/mob-suite) determines whether each one is located on a plasmid or the chromosome.
 
 ## Main Dependencies
 The workflow uses Nextflow as its management system. Please install [Nextflow](https://www.nextflow.io/) to run the workflow.
