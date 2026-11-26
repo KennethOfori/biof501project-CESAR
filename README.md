@@ -78,7 +78,17 @@ After running the pipeline you can verify that everything worked by comparing th
 <img src="./expected_results/circos_plots/DMIH.circos.png" alt="DMIH circos plot" width="400">
 
 **Average Nucleotide Identify:**
+
 <img src="./expected_results/ani_heatmap.png" alt="ANI heatmap" width="400">
+
+**Resistance Loci Heatmap:**
+
+<img src="./expected_results/resistance_loci_heatmap.png" alt="ANI heatmap" width="400">
+
+**Resistance Regions, Chromosomal or Plasmid:**
+
+
+<img src="./expected_results/resistance_regions.png" alt="ANI heatmap" width="400">
 
 ### AI Disclosure
 This workflow uses LLM tools in its development. Code development and creation of directed acyclic graph: Claude Opus 5.5.
