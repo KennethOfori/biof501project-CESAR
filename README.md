@@ -34,10 +34,12 @@ Required software is obtained with [Docker](https://docs.docker.com/learn/). Ple
 
 Once all dependencies are installed, you can test the workflow by following the following instructions which provides data from [Mannan et al. 2024](https://pubmed.ncbi.nlm.nih.gov/38274770/).
 
-Clone repository
+**Clone repository**
 ```
-git
+git clone https://github.com/KennethOfori/biof501project-CESAR.git
+cd biof501projects-CESAR
 ```
+
 The reads for the four resistant *E. coli* isolates are downloaded by the pipeline itself (`DOWNLOAD_READS`) and saved to `data/reads/` as `<sample>_{1,2}.fastq.gz`:
 
 | Sample | SRA run |
